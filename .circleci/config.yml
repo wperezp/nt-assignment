@@ -22,9 +22,10 @@ jobs:
     executor: node/default
     parameters:
       region:
-        default: us-east-1
+        default: us-east-2
         type: string
     environment:
+      AWS_ACCOUNT: 923739627351
       AWS_DEFAULT_REGION: <<parameters.region>>
       CDK_NEW_BOOTSTRAP: 1
     steps:
@@ -38,23 +39,10 @@ jobs:
           working_directory: cdk
 
 workflows:
-  development:
-    unless:
-      and:
-      - equal: [main, <<pipeline.git.branch>>]
+  main:
     jobs:
       - build
       - deploy:
           region: us-east-1
-          requires:
-            - build
-  production:
-    when:
-      and:
-      - equal: [main, <<pipeline.git.branch>>]
-    jobs:
-      - build
-      - deploy:
-          region: us-east-2
           requires:
             - build

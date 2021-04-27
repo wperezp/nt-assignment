@@ -19,8 +19,10 @@ export class NTStack extends cdk.Stack {
     super(scope, id, props);
 
     this.vpc = ec2.Vpc.fromLookup(this, 'VPC', {
-      vpcId: 'vpc-08980e85cdbc7500b'
+      vpcId: 'vpc-0f3982b122493722a'
     });
+
+    console.log(this.vpc.publicSubnets);
 
     this.sourceBucket = new s3.Bucket(this, 'sourceBucket', {
       versioned: false
@@ -38,7 +40,6 @@ export class NTStack extends cdk.Stack {
       handler: 'fetch.lambda_handler',
       runtime: lambda.Runtime.PYTHON_3_8,
       memorySize: 1024,
-      vpc: this.vpc,
       timeout: Duration.minutes(15),
       environment: {
         FIRE_DATA_URL: "https://data.sfgov.org/api/views/wr8u-xric/rows.csv",
@@ -99,7 +100,7 @@ export class NTStack extends cdk.Stack {
 
     this.workflowStateMachine = new sfn.StateMachine(this, 'StateMachine', {
       definition: workflowDefinition
-    })
+    });
 
   }
 }
