@@ -7,6 +7,14 @@ import { NTStack } from '../lib/nt-stack';
 const PROJECT_TAG = 'nt-assignment';
 
 const app = new cdk.App();
-const props = {tags: {project: PROJECT_TAG}, env: {account: process.env.AWS_ACCOUNT!.toString(), region: process.env.AWS_DEFAULT_REGION}}
 
-new NTStack(app, 'NTStack', props);
+
+new NTStack(app, 'NTStack', {
+  tags: {
+    project: PROJECT_TAG
+  },
+  env: {
+    account: process.env.AWS_ACCOUNT,
+    region: process.env.AWS_DEFAULT_REGION
+  }
+});

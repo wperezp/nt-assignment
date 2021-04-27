@@ -25,7 +25,7 @@ jobs:
         default: us-east-2
         type: string
     environment:
-      AWS_ACCOUNT: 923739627351
+      AWS_ACCOUNT: '923739627351'
       AWS_DEFAULT_REGION: <<parameters.region>>
       CDK_NEW_BOOTSTRAP: 1
     steps:
