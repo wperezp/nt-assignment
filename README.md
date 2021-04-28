@@ -26,3 +26,5 @@ Repository for assignment
   - Geografia (Dimension): Contiene la informacion geografica de los incidentes
   - Buildings (Dimension): Contiene la informacion de afectacion de los edificios del incidente, y sus caracteristicas.
 
+# Notas
+- De haber utilizado Redshift en lugar de RDS, se hubiera podido paralelizar la carga con tres Lambdas, escribiendo en S3 las tablas intermedias y copiando directamente (ya no se usaria SQLAlchemy). Esto ademas hubiera reducido notablemente el tiempo que toma el contenedor de Fargate en terminar toda la operacion.
