@@ -16,5 +16,4 @@ if __name__ == '__main__':
     # Get last retrieved data
     s3_bucket = os.environ['S3_DATA_BUCKET']
     df_source = pd.read_csv(f's3://{s3_bucket}/landing/fire_data.csv', dtype=str)
-    print(df_source.head(10))
     transform.transform_data(df_source, db_engine)

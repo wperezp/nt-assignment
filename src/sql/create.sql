@@ -1,5 +1,5 @@
 create table analytics.dwh_fincidents (
-    "Incident Number" CHAR(10) PRIMARY KEY,
+    "Incident Number" BIGINT PRIMARY KEY,
     "Incident Date" TIMESTAMP,
     "Call Number" CHAR(10),
     "Alarm DtTm" TIMESTAMP,
@@ -24,7 +24,7 @@ create table analytics.dwh_fincidents (
 );
 
 create table analytics.dwh_dgeography (
-    "Incident Number" CHAR(10) PRIMARY KEY,
+    "Incident Number" BIGINT PRIMARY KEY,
     "Address" VARCHAR(200),
     "City" VARCHAR(100),
     "zipcode" CHAR(20),
@@ -36,28 +36,64 @@ create table analytics.dwh_dgeography (
     "point" POINT
 )
 
-
-create table staging.dwh_fincidents (
-    "Incident Number" VARCHAR(100) PRIMARY KEY,
-    "Incident Date" VARCHAR(100),
-    "Call Number" VARCHAR(100),
-    "Alarm DtTm" VARCHAR(100),
-    "Arrival DtTm" VARCHAR(100),
-    "Close DtTm" VARCHAR(100),
-    "Suppression Units" VARCHAR(100),
-    "Suppression Personnel" VARCHAR(100),
-    "EMS Units" VARCHAR(100),
-    "EMS Personnel" VARCHAR(100),
-    "Other Units" VARCHAR(100),
-    "Other Personnel" VARCHAR(100),
-    "First Unit On Scene" VARCHAR(100),
-    "Fire Fatalities" VARCHAR(100),
-    "Fire Injuries" VARCHAR(100),
-    "Civilian Fatalities" VARCHAR(100),
-    "Civilian Injuries" VARCHAR(100),
-    "Number of Alarms" VARCHAR(100),
-    "Mutual Aid" VARCHAR(100),
-    "Action Taken Primary" VARCHAR(100),
-    "Action Taken Secondary" VARCHAR(100),
-    "Action Taken Other" VARCHAR(100)
+create table analytics.dwh_dbuildings (
+    "Incident Number" BIGINT,
+    "Exposure Number" INT,
+    "Estimated Property Loss" NUMERIC,
+    "Estimated Contents Loss" NUMERIC,
+    "Detector Alerted Occupants" VARCHAR(100),
+    "Property Use" VARCHAR(100),
+    "Area of Fire Origin" VARCHAR(100),
+    "Ignition Cause" VARCHAR(100),
+    "Ignition Factor Primary" VARCHAR(100),
+    "Ignition Factor Secondary" VARCHAR(100),
+    "Heat Source" VARCHAR(100),
+    "Item First Ignited" VARCHAR(100),
+    "Human Factors Associated with Ignition" VARCHAR(100),
+    "Structure Type" VARCHAR(100),
+    "Structure Status" VARCHAR(100),
+    "Floor of Fire Origin" INT,
+    "Fire Spread" VARCHAR(200),
+    "No Flame Spead" VARCHAR(20),
+    "Number of floors with minimum damage" INT,
+    "Number of floors with significant damage" INT,
+    "Number of floors with heavy damage" INT,
+    "Number of floors with extreme damage" INT,
+    "Detectors Present" VARCHAR(100),
+    "Detector Type" VARCHAR(100),
+    "Detector Operation" VARCHAR(100),
+    "Detector Effectiveness" VARCHAR(100),
+    "Detector Failure Reason" VARCHAR(100),
+    "Automatic Extinguishing System Present" VARCHAR(100),
+    "Automatic Extinguishing Sytem Type" VARCHAR(100),
+    "Automatic Extinguishing Sytem Perfomance" VARCHAR(100),
+    "Automatic Extinguishing Sytem Failure Reason" VARCHAR(100),
+    "Number of Sprinkler Heads Operating" INT,
+    PRIMARY KEY ("Incident Number", "Exposure Number")
 );
+
+
+-- create table staging.dwh_fincidents (
+--     "Incident Number" VARCHAR(100) PRIMARY KEY,
+--     "Incident Date" VARCHAR(100),
+--     "Call Number" VARCHAR(100),
+--     "Alarm DtTm" VARCHAR(100),
+--     "Arrival DtTm" VARCHAR(100),
+--     "Close DtTm" VARCHAR(100),
+--     "Suppression Units" VARCHAR(100),
+--     "Suppression Personnel" VARCHAR(100),
+--     "EMS Units" VARCHAR(100),
+--     "EMS Personnel" VARCHAR(100),
+--     "Other Units" VARCHAR(100),
+--     "Other Personnel" VARCHAR(100),
+--     "First Unit On Scene" VARCHAR(100),
+--     "Fire Fatalities" VARCHAR(100),
+--     "Fire Injuries" VARCHAR(100),
+--     "Civilian Fatalities" VARCHAR(100),
+--     "Civilian Injuries" VARCHAR(100),
+--     "Number of Alarms" VARCHAR(100),
+--     "Mutual Aid" VARCHAR(100),
+--     "Action Taken Primary" VARCHAR(100),
+--     "Action Taken Secondary" VARCHAR(100),
+--     "Action Taken Other" VARCHAR(100)
+-- );

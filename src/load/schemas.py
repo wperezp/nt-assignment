@@ -35,3 +35,38 @@ dgeography_cols = [
     "neighborhood_district",
     "point"
 ]
+
+dbuildings_cols = [
+    "Incident Number",
+    "Exposure Number",
+    "Estimated Property Loss",
+    "Estimated Contents Loss",
+    "Detector Alerted Occupants",
+    "Property Use",
+    "Area of Fire Origin",
+    "Ignition Cause",
+    "Ignition Factor Primary",
+    "Ignition Factor Secondary",
+    "Heat Source",
+    "Item First Ignited",
+    "Human Factors Associated with Ignition",
+    "Structure Type",
+    "Structure Status",
+    "Floor of Fire Origin",
+    "Fire Spread",
+    "No Flame Spead",
+    "Number of floors with minimum damage",
+    "Number of floors with significant damage",
+    "Number of floors with heavy damage",
+    "Number of floors with extreme damage",
+    "Detectors Present",
+    "Detector Type",
+    "Detector Operation",
+    "Detector Effectiveness",
+    "Detector Failure Reason",
+    "Automatic Extinguishing System Present",
+    "Automatic Extinguishing Sytem Type",
+    "Automatic Extinguishing Sytem Perfomance",
+    "Automatic Extinguishing Sytem Failure Reason",
+    "Number of Sprinkler Heads Operating"
+]

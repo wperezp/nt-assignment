@@ -16,7 +16,8 @@ def build_dgeography(df_source: pd.DataFrame) -> pd.DataFrame:
 
 
 def build_dbuildings(df_source: pd.DataFrame) -> pd.DataFrame:
-    pass
+    df_dbuildings = df_source.loc[:, schemas.dbuildings_cols]
+    return df_dbuildings
 
 
 def transform_data(df_source: pd.DataFrame, db_engine:sqlalchemy.engine.Engine):
@@ -29,17 +30,23 @@ def transform_data(df_source: pd.DataFrame, db_engine:sqlalchemy.engine.Engine):
     for row in result:
         if row['max'] is not None:
             max_incident_number = row['max']
-    print(max_incident_number)
+    print(f"Last incident number in database is: {max_incident_number}")
 
     # Restrict dataset
     df_new_incidents = df_source.loc[df_source['Incident Number'] > max_incident_number,]
 
     # Build datasets and upload to staging table
     dwh_fincidents = build_fincidents(df_new_incidents)
+    print("Loading dwh_finicidents")
     dwh_fincidents.to_sql(con=db_engine, name='dwh_fincidents', schema='staging', index=False, method='multi',
-                          dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace')
+                          dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace', chunksize=100)
+    print("Loading dwh_dgeography")
     dwh_dgeography = build_dgeography(df_new_incidents)
     dwh_dgeography.to_sql(con=db_engine, name='dwh_fincidents', schema='staging', index=False, method='multi',
-                          dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace')
+                          dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace', chunksize=100)
+    print("Loading dwh_dbuildings")
+    dwh_dbuildings = build_dbuildings(df_new_incidents)
+    dwh_dbuildings.to_sql(con=db_engine, name='dwh_fincidents', schema='staging', index=False, method='multi',
+                          dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace', chunksize=100)
 
 
