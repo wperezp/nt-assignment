@@ -39,16 +39,16 @@ def transform_data(df_source: pd.DataFrame, db_engine:sqlalchemy.engine.Engine):
         with connection.begin():
             # Build datasets and upload to staging table
             dwh_fincidents = build_fincidents(df_new_incidents)
-            print("Loading dwh_finicidents")
+            print("Loading dwh_fincidents")
             dwh_fincidents.to_sql(con=connection, name='dwh_fincidents', schema='staging', index=False, method='multi',
                                   dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace', chunksize=100)
             print("Loading dwh_dgeography")
             dwh_dgeography = build_dgeography(df_new_incidents)
-            dwh_dgeography.to_sql(con=connection, name='dwh_fincidents', schema='staging', index=False, method='multi',
+            dwh_dgeography.to_sql(con=connection, name='dwh_dgeography', schema='staging', index=False, method='multi',
                                   dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace', chunksize=100)
             print("Loading dwh_dbuildings")
             dwh_dbuildings = build_dbuildings(df_new_incidents)
-            dwh_dbuildings.to_sql(con=connection, name='dwh_fincidents', schema='staging', index=False, method='multi',
+            dwh_dbuildings.to_sql(con=connection, name='dwh_dbuildings', schema='staging', index=False, method='multi',
                                   dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace', chunksize=100)
 
     print("Updating analytics tables")
