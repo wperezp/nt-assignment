@@ -1,6 +1,10 @@
 # Assignment
 Repository for assignment
 
+# Key files
+- cdk/lib/nt-stack.ts (aws)
+- src/* (componentes)
+
 ## Arquitectura
 - Step Functions:
   - Lambda de descarga diaria
