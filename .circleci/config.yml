@@ -43,6 +43,5 @@ workflows:
     jobs:
       - build
       - deploy:
-          region: us-east-1
           requires:
             - build

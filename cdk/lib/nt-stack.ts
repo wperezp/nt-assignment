@@ -22,8 +22,6 @@ export class NTStack extends cdk.Stack {
       vpcId: 'vpc-0f3982b122493722a'
     });
 
-    console.log(this.vpc.publicSubnets);
-
     this.sourceBucket = new s3.Bucket(this, 'sourceBucket', {
       versioned: false
     });
