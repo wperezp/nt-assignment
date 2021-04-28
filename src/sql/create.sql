@@ -23,6 +23,19 @@ create table analytics.dwh_fincidents (
     "Action Taken Other" VARCHAR(100)
 );
 
+create table analytics.dwh_dgeography (
+    "Incident Number" CHAR(10) PRIMARY KEY,
+    "Address" VARCHAR(200),
+    "City" VARCHAR(100),
+    "zipcode" CHAR(20),
+    "Battalion" VARCHAR(20),
+    "Station Area" VARCHAR(20),
+    "Box" VARCHAR(20),
+    "Supervisor District" VARCHAR(50),
+    "neighborhood_district" VARCHAR(50),
+    "point" POINT
+)
+
 
 create table staging.dwh_fincidents (
     "Incident Number" VARCHAR(100) PRIMARY KEY,

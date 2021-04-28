@@ -22,3 +22,16 @@ fincidents_cols = [
     "Action Taken Secondary",
     "Action Taken Other"
 ]
+
+dgeography_cols = [
+    "Incident Number",
+    "Address",
+    "City",
+    "zipcode",
+    "Battalion",
+    "Station Area",
+    "Box",
+    "Supervisor District",
+    "neighborhood_district",
+    "point"
+]
