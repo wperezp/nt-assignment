@@ -36,8 +36,10 @@ def transform_data(df_source: pd.DataFrame, db_engine:sqlalchemy.engine.Engine):
 
     # Build datasets and upload to staging table
     dwh_fincidents = build_fincidents(df_new_incidents)
-    dwh_fincidents.to_sql(con=db_engine, name='dwh_fincidents', schema='staging', index=False, method='multi', dtype=str, if_exists='replace')
+    dwh_fincidents.to_sql(con=db_engine, name='dwh_fincidents', schema='staging', index=False, method='multi',
+                          dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace')
     dwh_dgeography = build_dgeography(df_new_incidents)
-    dwh_dgeography.to_sql(con=db_engine, name='dwh_fincidents', schema='staging', index=False, method='multi', dtype=str, if_exists='replace')
+    dwh_dgeography.to_sql(con=db_engine, name='dwh_fincidents', schema='staging', index=False, method='multi',
+                          dtype=sqlalchemy.types.VARCHAR(length=100), if_exists='replace')
 
 
