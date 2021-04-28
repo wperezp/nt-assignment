@@ -1,6 +1,7 @@
 import boto3
 import os
 import requests
+import sqlalchemy
 
 
 def lambda_handler(event, context):
