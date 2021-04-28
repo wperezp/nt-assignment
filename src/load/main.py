@@ -10,8 +10,8 @@ if __name__ == '__main__':
     db_host = os.environ['DB_HOST']
     db_user = os.environ['DB_USER']
     db_pass = os.environ['DB_PASS']
-    conn_string = 'postgres://{0}:{1}@{2}:5432/postgres'.format(db_user, db_pass, db_host)
-    db = create_engine(conn_string)
+    conn_string = 'postgresql://{0}:{1}@{2}:5432/postgres'.format(db_user, db_pass, db_host)
+    db_engine = create_engine(conn_string)
     # conn = psycopg2.connect(host=db_host, database='postgres', user=db_user, password=db_pass)
     # Get last retrieved data
     s3_bucket = os.environ['S3_DATA_BUCKET']
