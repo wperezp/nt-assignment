@@ -45,6 +45,15 @@ export class NTStack extends cdk.Stack {
       }
     });
 
+    const requestsLayerArn = `arn:aws:lambda:${process.env.AWS_DEFAULT_REGION}:770693421928:layer:Klayers-python38-requests-html:37`;
+    const requestsLayer = lambda.LayerVersion.fromLayerVersionArn(
+      this,
+      "fnLayerRequests",
+      requestsLayerArn
+    );
+
+    this.fnFetchData.addLayers(requestsLayer);
+
     this.sourceBucket.grantWrite(this.fnFetchData);
 
     const cluster = new ecs.Cluster(this, "ecsCluster", {
@@ -59,20 +68,23 @@ export class NTStack extends cdk.Stack {
 
     this.sourceBucket.grantReadWrite(taskDefinition.taskRole);
 
-    const containerDefinition = taskDefinition.addContainer('Container', {
+    taskDefinition.addContainer('Container', {
       image: ecs.ContainerImage.fromAsset('../src/load/'),
       logging: ecs.LogDriver.awsLogs({
         streamPrefix: 'Container'
       }),
       environment: {
-        S3_DATA_BUCKET: this.sourceBucket.bucketName
+        S3_DATA_BUCKET: this.sourceBucket.bucketName,
+        DB_HOST: process.env.DB_HOST || '',
+        DB_USER: process.env.DB_USER || '',
+        DB_PASS: process.env.DB_PASS || '',
       },
       cpu: 1024,
       memoryLimitMiB: 4096
     });
 
     // Step Functions workflow
-    const fetchDatatask = new tasks.LambdaInvoke(this, 'FetchDataTask', {
+    const fetchDataTask = new tasks.LambdaInvoke(this, 'FetchDataTask', {
       lambdaFunction: this.fnFetchData
     })
 
@@ -81,20 +93,10 @@ export class NTStack extends cdk.Stack {
       taskDefinition: taskDefinition,
       integrationPattern: sfn.IntegrationPattern.RUN_JOB,
       launchTarget: new tasks.EcsFargateLaunchTarget(),
-      assignPublicIp: true,
-      containerOverrides: [
-        {
-          containerDefinition: containerDefinition,
-          environment: [
-            {name: 'DB_HOST', value: process.env.DB_HOST || ''},
-            {name: 'DB_USER', value: process.env.DB_USER || ''},
-            {name: 'DB_PASS', value: process.env.DB_PASS || ''}
-          ]
-        }
-      ]
+      assignPublicIp: true
     });
 
-    const workflowDefinition = fetchDatatask.next(loadDataTask);
+    const workflowDefinition = fetchDataTask.next(loadDataTask);
 
     this.workflowStateMachine = new sfn.StateMachine(this, 'StateMachine', {
       definition: workflowDefinition
